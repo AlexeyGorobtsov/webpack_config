@@ -1,4 +1,6 @@
 const path = require('path');
+const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -50,11 +52,13 @@ module.exports = {
         ]
     },
     plugins: [
+        new CleanWebpackPlugin(['dist']),
         new ExtractTextPlugin('[name].css'),
         new HtmlWebpackPlugin({
             title: 'Domonap Section Action',
             hash: true,
             template: './index.html'
-        })
+        }),
+        new webpack.HashedModuleIdsPlugin()
     ]
 };
