@@ -4,17 +4,51 @@ class Helpers {
     }
 
     /**
-     * краткая запись выбора элементов dom
-     * @param selector {string}
-     * @param all при указании параметра all использует querySelectorAll();
-     * @returns {*} {*} (пример query('myClass', 'all') вернет document.querySelectorAll('myClass');
+     *
+     * @param value
+     * @returns {Array}
      */
-    query(selector, all = '') {
-        if (all !== '') {
+
+    check(value) {
+       return value ? value : [];
+    }
+
+    /**
+     *
+     * @param selector
+     * @returns {NodeListOf<HTMLElementTagNameMap[keyof HTMLElementTagNameMap]>}
+     */
+    queryAll(selector) {
             return document.querySelectorAll(selector);
-        } else {
-            return document.querySelectorAll(selector)[0];
-        }
     };
 
+    /**
+     *
+     * @param selector
+     * @returns {*}
+     */
+
+    query(selector) {
+        return this.check(document.querySelectorAll(selector)["0"]);
+    }
+
+    getAllClasses(){
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const obj = {};
+            const arr = [];
+            document.querySelectorAll('*').forEach(item => {
+                arr.push(item.classList);
+            });
+            arr.forEach(it => {
+                obj[it] = `.${it}`;
+            });
+            //document.write(JSON.stringify(obj));
+            return obj
+
+        });
+
+    }
 }
+
+export default Helpers;

@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-    mode: 'production',
+    mode: 'development',
     context: path.resolve(__dirname, 'src'),
     entry: {
         index: './index.js',
@@ -29,7 +29,7 @@ module.exports = {
                 })
             },
             {
-                test: /\.(png|svg|jpg|gif)$/,
+                test: /\.(png|svg|jpg|gif|mp4)$/,
                 use: [
                     'file-loader'
                 ]
