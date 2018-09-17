@@ -32,8 +32,11 @@ class Helpers {
         return this.check(document.querySelectorAll(selector)["0"]);
     }
 
-    getAllClasses(){
+    /**
+     *
+     */
 
+    static getAllClasses(){
         document.addEventListener('DOMContentLoaded', () => {
             const obj = {};
             const arr = [];
@@ -43,11 +46,30 @@ class Helpers {
             arr.forEach(it => {
                 obj[it] = `.${it}`;
             });
-            //document.write(JSON.stringify(obj));
+            document.write(JSON.stringify(obj));
             return obj
 
         });
 
+    }
+
+    /**
+     *
+     */
+
+    static getAllId() {
+        document.addEventListener('DOMContentLoaded', () => {
+            const obj ={};
+            const arr = [];
+            document.querySelectorAll('*').forEach(item => {
+                arr.push(item.id);
+            });
+            arr.forEach(it => {
+                obj[it] = `#${it}`;
+            });
+            document.write(JSON.stringify(obj));
+            return obj;
+        })
     }
 }
 
