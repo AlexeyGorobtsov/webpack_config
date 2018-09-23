@@ -151,10 +151,21 @@ class Helpers {
                         })
                     })
                 }
-
             }
         };
         getScroll();
+    }
+
+    /**
+     * empty the contents
+     * @param el (element Dom)
+     * @return {void}
+     */
+
+    deletingDomElement(el) {
+        while (el.firstChild) {
+            el.removeChild(el.firstChild);
+        }
     }
 }
 
