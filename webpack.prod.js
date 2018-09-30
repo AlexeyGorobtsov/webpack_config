@@ -26,10 +26,10 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
+                    fallback: 'style-loader',
                     use: [
                         {
-                            loader: "css-loader",
+                            loader: 'css-loader',
                             options: {
                                 minimize: true
                             }
@@ -41,11 +41,11 @@ module.exports = {
                 test: /\.(png|svg|jpg|gif|mp4)$/,
                 use: [
                     {
-                    loader: 'file-loader',
-                    options: {
-                        useRelativePath: true
+                        loader: 'file-loader',
+                        options: {
+                            useRelativePath: true
+                        }
                     }
-                }
 
                 ]
             },

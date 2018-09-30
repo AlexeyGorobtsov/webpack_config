@@ -1,6 +1,6 @@
 class Helpers {
     constructor() {
-        this.helpers = {}
+        this.helpers = {};
     }
 
     /**
@@ -20,7 +20,7 @@ class Helpers {
      */
     queryAll(selector) {
         return document.querySelectorAll(selector);
-    };
+    }
 
     /**
      *
@@ -29,7 +29,7 @@ class Helpers {
      */
 
     query(selector) {
-        return this.check(document.querySelectorAll(selector)["0"]);
+        return this.check(document.querySelectorAll(selector)['0']);
     }
 
     /**
@@ -47,7 +47,7 @@ class Helpers {
                 obj[it] = `.${it}`;
             });
             document.write(JSON.stringify(obj));
-            return obj
+            return obj;
 
         });
 
@@ -69,7 +69,7 @@ class Helpers {
             });
             document.write(JSON.stringify(obj));
             return obj;
-        })
+        });
     }
 
     /**
@@ -148,8 +148,8 @@ class Helpers {
                         window.scroll({
                             top: offset(elArray[i]),
                             behavior: 'smooth'
-                        })
-                    })
+                        });
+                    });
                 }
             }
         };
