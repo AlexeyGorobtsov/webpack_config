@@ -1,6 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+//const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
     mode: 'development',
@@ -24,10 +26,13 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use:  'css-loader'
-                })
+
+                use: [
+                    devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'postcss-loader'
+                ]
+
             },
             {
                 test: /\.(png|svg|jpg|gif|mp4)$/,
@@ -36,7 +41,7 @@ module.exports = {
                 ]
             },
             {
-                test:/\.(woff|woff2|eot|ttf|otf)$/,
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
                 use: [
                     'file-loader'
                 ]
@@ -44,11 +49,13 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin('[name].css'),
         new HtmlWebpackPlugin({
             title: 'Domonap Section Action',
             hash: true,
             template: './index.html'
+        }),
+        new MiniCssExtractPlugin({
+            filename: devMode ? '[name].css' : '[name].[hash].css'
         })
     ]
 };

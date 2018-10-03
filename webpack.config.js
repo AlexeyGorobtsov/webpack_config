@@ -1,9 +1,11 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+//const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     context: path.resolve(__dirname, 'src'),
     entry: {
         index: './index.js',
@@ -23,15 +25,19 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use:  'css-loader'
-                })
+
+                use: [
+                    devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'postcss-loader'
+                ]
+
             },
             {
                 test: /\.(png|svg|jpg|gif|mp4)$/,
                 use: [
                     'file-loader'
+
                 ]
             },
             {
@@ -43,11 +49,13 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin('[name].css'),
         new HtmlWebpackPlugin({
             title: 'Domonap Section Action',
             hash: true,
             template: './index.html'
+        }),
+        new MiniCssExtractPlugin({
+            filename: devMode ? '[name].css' : '[name].[hash].css'
         })
     ]
 };

@@ -2,7 +2,10 @@ const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+//const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const devMode = process.env.NODE_ENV !== 'production';
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
     mode: 'development',
@@ -25,17 +28,19 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                minimize: true
-                            }
+                use: [
+                    'style-loader',
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: () => [require('autoprefixer')({
+                                'browsers': ['> 2%', 'last 2 versions', 'IE 8']
+                            })],
                         }
-                    ]
-                })
+                    },
+                ]
             },
             {
                 test: /\.(png|svg|jpg|gif|mp4)$/,
@@ -43,7 +48,8 @@ module.exports = {
                     {
                         loader: 'file-loader',
                         options: {
-                            useRelativePath: true
+                            name: '[path][name].[ext]',
+                            outputPath: 'images/'
                         }
                     }
 
@@ -52,19 +58,28 @@ module.exports = {
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
                 use: [
-                    'file-loader'
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[path][name].[ext]',
+                            outputPath: 'fonts/'
+                        }
+                    }
+
                 ]
             }
         ]
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
-        new ExtractTextPlugin('[name].css'),
         new HtmlWebpackPlugin({
             title: 'Domonap Section Action',
             hash: true,
             template: './index.html'
         }),
-        new webpack.HashedModuleIdsPlugin()
+        new webpack.HashedModuleIdsPlugin(),
+        new MiniCssExtractPlugin({
+            filename: devMode ? '[name].css' : '[name].[hash].css'
+        })
     ]
 };
