@@ -10,8 +10,6 @@ module.exports = {
     context: path.resolve(__dirname, 'src'),
     entry: {
         index: './index.js',
-        /*action: './action.css',
-        bootstrap: './bootstrap.css'*/
     },
     devtool: 'inline-source-map',
     devServer: {
@@ -19,7 +17,7 @@ module.exports = {
     },
 
     output: {
-        filename: '[name].js',
+        filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'dist')
     },
     module: {
@@ -57,5 +55,17 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: devMode ? '[name].css' : '[name].[hash].css'
         })
-    ]
+    ],
+    optimization: {
+        runtimeChunk: 'single',
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all'
+                }
+            }
+        }
+    }
 };

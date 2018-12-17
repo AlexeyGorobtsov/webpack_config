@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-//const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const devMode = process.env.NODE_ENV !== 'production';
 const autoprefixer = require('autoprefixer');
@@ -12,8 +11,6 @@ module.exports = {
     context: path.resolve(__dirname, 'src'),
     entry: {
         index: './index.js',
-        /*action: './action.css',
-        bootstrap: './bootstrap.css'*/
     },
     devtool: 'inline-source-map',
     devServer: {
@@ -21,7 +18,7 @@ module.exports = {
     },
 
     output: {
-        filename: '[name].js',
+        filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'dist')
     },
     module: {
@@ -73,7 +70,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
-            title: 'Domonap Section Action',
+            title: '',
             hash: true,
             template: './index.html'
         }),
@@ -81,5 +78,17 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: devMode ? '[name].css' : '[name].[hash].css'
         })
-    ]
+    ],
+    optimization: {
+        runtimeChunk: 'single',
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all'
+                }
+            }
+        }
+    }
 };
