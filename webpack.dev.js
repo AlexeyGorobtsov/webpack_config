@@ -6,12 +6,12 @@ const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
     mode: 'development',
-    devtool: 'inline-source-map',
+    devtool: 'eval',
     context: path.resolve(__dirname, 'src'),
     entry: {
         index: './index.js',
     },
-    devtool: 'inline-source-map',
+    devtool: 'eval',
     devServer: {
         contentBase: './dist'
     },
