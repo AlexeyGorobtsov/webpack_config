@@ -9,7 +9,7 @@ module.exports = {
     entry: {
         index: './index.js',
     },
-    devtool: 'eval',
+    devtool: 'cheap-eval-source-map',
     devServer: {
         contentBase: './dist'
     },

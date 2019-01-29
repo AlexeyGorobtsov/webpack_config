@@ -6,12 +6,11 @@ const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
     mode: 'development',
-    devtool: 'eval',
+    devtool: 'cheap-eval-source-map',
     context: path.resolve(__dirname, 'src'),
     entry: {
         index: './index.js',
     },
-    devtool: 'eval',
     devServer: {
         contentBase: './dist'
     },
