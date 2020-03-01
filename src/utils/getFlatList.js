@@ -19,8 +19,8 @@ import {getValue} from "./getValue";
  'group.active',
  ];
  *
- *getFlatList(arr, keys) // [{
-    some: "test"
+ *getFlatList(arr, keys) // result [{
+    name: "project"
     group: {id: "1", active: true}
     group.id: "1"
     group.active: true
